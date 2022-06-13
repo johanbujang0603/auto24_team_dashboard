@@ -1,0 +1,37 @@
+{
+  "name": "auto24-team",
+  "version": "1.0.0",
+  "description": "Auto24 Team Dashboard",
+  "main": "server.js",
+  "scripts": {
+    "client-install": "npm install --prefix client",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@google-cloud/vision": "^2.4.2",
+    "axios": "^0.21.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "concurrently": "^4.0.1",
+    "connect-timeout": "^1.9.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.16.4",
+    "formidable": "^2.0.1",
+    "fs": "^0.0.1-security",
+    "jsonwebtoken": "^8.3.0",
+    "locutus": "^2.0.16",
+    "mongoose": "^5.3.11",
+    "node-fetch": "^3.2.6",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "path": "^0.12.7",
+    "prismjs": "^1.24.1",
+    "request": "^2.88.2"
+  }
+}
