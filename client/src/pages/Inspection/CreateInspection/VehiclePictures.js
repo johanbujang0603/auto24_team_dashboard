@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Row, Col, Button, UncontrolledTooltip } from 'reactstrap';
+import { Row, Col, Button, UncontrolledTooltip, Spinner } from 'reactstrap';
 import Dropzone from "react-dropzone";
 import FeatherIcon from 'feather-icons-react';
 
@@ -57,8 +57,7 @@ const types = [
 
 const VehiclePictures = () => {
   const dispatch = useDispatch();
-  const {id, currentData} = useSelector((state) => state.Inspection);
-  const [files, setFiles] = useState([]);
+  const {id, currentData, isLoading} = useSelector((state) => state.Inspection);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentType, setCurrentType] = useState(null);
   const [photos, setPhotos] = useState(null);
@@ -105,8 +104,7 @@ const VehiclePictures = () => {
   }
 
   const handleRemovePhoto = (key) => {
-    console.log(key);
-    // setCurrentType(key)
+    setPhotos({ ...photos, [key]: null });
   }
 
   const handleUploadAgain = (key) => {
@@ -136,7 +134,6 @@ const VehiclePictures = () => {
       if (photos[photoKey] !== null)
         formData.append(photoKey, photos[photoKey]);
     }
-    console.log('xxx');
     dispatch(submitVehiclePhotos(formData));
   }
 
@@ -261,14 +258,29 @@ const VehiclePictures = () => {
       </div>
 
       <div className="d-flex align-items-start gap-3 mt-4">
-        <button
+        <Button
           type="button"
-          className="btn btn-success btn-label right ms-auto nexttab nexttab"
+          color="success"
+          className="btn-label right ms-auto nexttab nexttab"
           onClick={handleSubmitVehiclePhotos}
         >
-          <i className="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>
-          Next Step
-        </button>
+          {
+            isLoading ? (
+              <span className="d-flex align-items-center">
+                <Spinner size="sm" className="flex-shrink-0"> Chargement en cours.. </Spinner>
+                <span className="flex-grow-1 ms-2">
+                  Chargement en cours..
+                </span>
+              </span>
+            ) : (
+              <>
+                <i className="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>
+                  ÉTAPE SUIVANTE
+              </>
+            )
+          }
+          
+        </Button>
       </div>
     </React.Fragment>
     );

@@ -41,4 +41,18 @@ File: Custom Css File
     .css-6j8wv5-Input,  .css-qc6sy-singleValue{
         color:$heading-color;
     }
+    &.is-invalid{
+        .css-1s2u09g-control{
+            border-color: $danger;
+            &:hover {
+                border-color: $danger !important;
+            }
+        }
+        .css-1pahdxg-control{
+            border-color: $danger;
+            &:hover {
+                border-color: $danger !important;
+            }
+        }
+    }
 }

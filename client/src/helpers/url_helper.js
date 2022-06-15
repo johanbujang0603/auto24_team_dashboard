@@ -11,9 +11,11 @@ export const POST_EDIT_JWT_PROFILE = "/post-jwt-profile";
 export const POST_EDIT_PROFILE = "/post-fake-profile";
 
 //Inspection
-export const POST_UPLOAD_VEHICLE_PHOTOS = "/inspection/upload-photos"
+export const POST_UPLOAD_VEHICLE_PHOTOS = "/inspection/upload-photos";
 
-
+//Car Makes & Models
+export const GET_CAR_MAKES = "/vehicle/car-makes";
+export const GET_CAR_MODELS = "/vehicle/car-models";
 
 //CALENDER
 export const GET_EVENTS = "/events";

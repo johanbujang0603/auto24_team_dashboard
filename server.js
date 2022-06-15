@@ -10,6 +10,7 @@ require('dotenv').config()
 const authRoute = require("./routes/api/authenticate");
 const vinRoute = require("./routes/api/vin");
 const inspectionRoute = require("./routes/api/inspection");
+const vehicleRoute = require("./routes/api/vehicle");
 
 const app = express();
 app.use(cors());
@@ -38,6 +39,7 @@ app.use(passport.initialize());
 app.use("/api/authenticate", authRoute);
 app.use("/api/inspection", inspectionRoute);
 app.use("/api/vin", vinRoute);
+app.use("/api/vehicle", vehicleRoute);
 
 const port = process.env.PORT || 5000;
 
