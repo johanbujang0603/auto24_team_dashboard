@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardBody, CardHeader, Col, Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
-import { topPages } from "../../common/data";
+// import { topPages } from "../../common/data";
 
 const TopPages = () => {
     const [isTopPageDropdown, setTopPageDropdown] = useState(false);
@@ -37,7 +37,7 @@ const TopPages = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {(topPages || []).map((item, index) => (
+                                    {/* {(topPages || []).map((item, index) => (
                                         <tr key={index}>
                                             <td>
                                                 <Link to="#">{item.page}</Link>
@@ -45,7 +45,7 @@ const TopPages = () => {
                                             <td>{item.active}</td>
                                             <td>{item.user}</td>
                                         </tr>
-                                    ))}
+                                    ))} */}
                                 </tbody>
                             </table>
                         </div>

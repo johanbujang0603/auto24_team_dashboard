@@ -2,6 +2,9 @@ import {
     SUBMIT_VEHICLE_PHOTOS,
     SUBMIT_VEHICLE_PHOTOS_SUCCESS,
     SUBMIT_VEHICLE_PHOTOS_FAIL,
+    SUBMIT_VEHICLE_DETAILS,
+    SUBMIT_VEHICLE_DETAILS_SUCCESS,
+    SUBMIT_VEHICLE_DETAILS_FAIL,
     GET_CAR_MAKES_SUCCESS,
     GET_CAR_MAKES_FAIL,
     GET_CAR_MODELS_SUCCESS,
@@ -34,8 +37,52 @@ const Inspection = (state = INIT_STATE, action) => {
         case SUBMIT_VEHICLE_PHOTOS:
             return { ...state, isLoading: true }
         case SUBMIT_VEHICLE_PHOTOS_SUCCESS:
-            return { ...state, isLoading: false }
+            return {
+                ...state,
+                isLoading: false,
+                passedSteps: state.passedSteps.includes(state.activeStep) ? state.passedSteps : [...state.passedSteps, state.activeStep],
+                activeStep: state.activeStep + 1,
+                currentData: {
+                    ...state.currentData,
+                    id: action.payload.data._id,
+                    photos: action.payload.data.photos,
+                    vehicleDetails: action.payload.data.vehicle_details
+                },
+            }
         case SUBMIT_VEHICLE_PHOTOS_FAIL:
+            return { ...state, isLoading: false }
+        case SUBMIT_VEHICLE_DETAILS:
+            return { ...state, isLoading: true }
+        case SUBMIT_VEHICLE_DETAILS_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                passedSteps: state.passedSteps.includes(state.activeStep) ? state.passedSteps : [...state.passedSteps, state.activeStep],
+                activeStep: state.activeStep + 1,
+                currentData: {
+                    ...state.currentData,
+                    id: action.payload.data._id,
+                    vehicleDetails: action.payload.data.vehicle_details
+                },
+            }
+        case SUBMIT_VEHICLE_DETAILS_FAIL:
+            return { ...state, isLoading: false }
+        case SUBMIT_VEHICLE_INSPECTION:
+            return { ...state, isLoading: true }
+        case SUBMIT_VEHICLE_INSPECTION_SUCCESS:
+            console.log(action.payload.data);
+            return {
+                ...state,
+                isLoading: false,
+                passedSteps: state.passedSteps.includes(state.activeStep) ? state.passedSteps : [...state.passedSteps, state.activeStep],
+                activeStep: state.activeStep + 1,
+                currentData: {
+                    ...state.currentData,
+                    id: action.payload.data._id,
+                    vehicleInspection: action.payload.data.vehicle_inspection
+                },
+            }
+        case SUBMIT_VEHICLE_INSPECTION_FAIL:
             return { ...state, isLoading: false }
         case GET_CAR_MAKES_SUCCESS:
             return { ...state, carMakes: action.payload.data }
@@ -47,12 +94,6 @@ const Inspection = (state = INIT_STATE, action) => {
             return { ...state, carModels: [] }
         case TOOGLE_ACTIVE_STEP:
             return { ...state, activeStep: action.payload }
-        case SUBMIT_VEHICLE_INSPECTION:
-            return { ...state, isLoading: true }
-        case SUBMIT_VEHICLE_INSPECTION_SUCCESS:
-            return { ...state, isLoading: false }
-        case SUBMIT_VEHICLE_INSPECTION_FAIL:
-            return { ...state, isLoading: false }
         default:
             return { ...state };
     }

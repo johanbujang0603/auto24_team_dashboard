@@ -5,6 +5,10 @@ import {
   SUBMIT_VEHICLE_PHOTOS,
   SUBMIT_VEHICLE_PHOTOS_SUCCESS,
   SUBMIT_VEHICLE_PHOTOS_FAIL,
+  
+  SUBMIT_VEHICLE_DETAILS,
+  SUBMIT_VEHICLE_DETAILS_SUCCESS,
+  SUBMIT_VEHICLE_DETAILS_FAIL,
 
   GET_CAR_MAKES,
   GET_CAR_MAKES_SUCCESS,
@@ -37,13 +41,28 @@ export const submitVehiclePhotos = vehiclePhotos => ({
   payload: vehiclePhotos,
 });
 
-export const submitVehiclePhotosSuccess = vehiclePhotos => ({
+export const submitVehiclePhotosSuccess = data => ({
   type: SUBMIT_VEHICLE_PHOTOS_SUCCESS,
-  payload: vehiclePhotos,
+  payload: data,
 });
 
 export const submitVehiclePhotosFail = error => ({
   type: SUBMIT_VEHICLE_PHOTOS_FAIL,
+  payload: error,
+});
+
+export const submitVehicleDetails = details => ({
+  type: SUBMIT_VEHICLE_DETAILS,
+  payload: details,
+});
+
+export const submitVehicleDetailsSuccess = data => ({
+  type: SUBMIT_VEHICLE_DETAILS_SUCCESS,
+  payload: data,
+});
+
+export const submitVehicleDetailsFail = error => ({
+  type: SUBMIT_VEHICLE_DETAILS_FAIL,
   payload: error,
 });
 

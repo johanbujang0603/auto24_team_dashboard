@@ -12,6 +12,8 @@ export const POST_EDIT_PROFILE = "/post-fake-profile";
 
 //Inspection
 export const POST_UPLOAD_VEHICLE_PHOTOS = "/inspection/upload-photos";
+export const POST_VEHICLE_DETAILS = "/inspection/add-details";
+export const POST_VEHICLE_INSPECTION = "/inspection/add-vehicle-inspection";
 
 //Car Makes & Models
 export const GET_CAR_MAKES = "/vehicle/car-makes";

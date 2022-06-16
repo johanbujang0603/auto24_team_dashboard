@@ -9,6 +9,8 @@ const FormData = require('form-data');
 
 // Load Model
 const Inspection = require("../../models/Inspection");
+const CarMake = require("../../models/CarMake");
+const CarModel = require("../../models/CarModel");
 
 const {detectCountries, getCountries} = require("../../utils");
 
@@ -97,16 +99,91 @@ router.post("/upload-photos", async (req, res) => {
                     newVehicleDetails['colour'] = colorTrans[detections[0].color[0].name];
                 }
 
+                const makeObj = await CarMake.findOne({ name: newVehicleDetails['make'] });
+                const modelObj = await CarModel.findOne({ name: newVehicleDetails['model'] });
+
+                if (makeObj && modelObj) {
+                    newVehicleDetails['make'] = makeObj._id;
+                    newVehicleDetails['model'] = modelObj._id;
+                } else {
+                    newVehicleDetails['make'] = '';
+                    newVehicleDetails['model'] = '';
+                }
+
                 const newInspection = new Inspection({
                     photos,
                     vehicle_details: newVehicleDetails
                 });
 
                 newInspection.save();
-                return res.json({message: "success"});
+                return res.json({ data: newInspection._doc });
             });
         }
     });
+});
+
+router.post("/add-details", async (req, res) => {
+    const { id } = req.body;
+    const vehicleDetails = req.body;
+    delete vehicleDetails.id;
+    if (id) {
+        Inspection.findByIdAndUpdate(id, {
+            $set: {
+                vehicle_details: vehicleDetails,
+            }
+        }, { returnOriginal: false }, function (err, doc) {
+            if (err) {
+                return res.status(400).json({ message: "There was an error updating vehicle details." })
+            }
+            return res.json({ data: doc });
+        })
+    } else {
+        const newInspection = new Inspection({
+            photos: null,
+            vehicle_inspection: null,
+            vehicle_inspection_diagram: [],
+            canvas_url: null,
+            comments: null,
+            work_needed: null,
+            date: new Date(),
+            vehicle_details: vehicleDetails
+        });
+
+        newInspection.save();
+        return res.json({ data: newInspection._doc });
+    }
+});
+
+router.post("/add-vehicle-inspection", async (req, res) => {
+    const { id } = req.body;
+    const inspectionData = req.body;
+    delete inspectionData.id;
+    if (id) {
+        Inspection.findByIdAndUpdate(id, {
+            $set: {
+                vehicle_inspection: inspectionData,
+            }
+        }, { returnOriginal: false }, function (err, doc) {
+            if (err) {
+                return res.status(400).json({ message: "There was an error updating vehicle details." })
+            }
+            return res.json({ data: doc });
+        })
+    } else {
+        const newInspection = new Inspection({
+            photos: null,
+            vehicle_inspection: inspectionData,
+            vehicle_inspection_diagram: [],
+            canvas_url: null,
+            comments: null,
+            work_needed: null,
+            date: new Date(),
+            vehicle_details: null,
+        });
+
+        newInspection.save();
+        return res.json({ data: newInspection._doc });
+    }
 });
 
 module.exports = router;

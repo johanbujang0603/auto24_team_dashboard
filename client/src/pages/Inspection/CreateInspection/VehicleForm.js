@@ -8,11 +8,12 @@ import {
   Input,
   FormFeedback,
   Form,
+  Spinner,
 } from "reactstrap";
 import Select from "react-select";
 
 //redux
-import { getCarModels } from "../../../store/actions";
+import { getCarModels, submitVehicleDetails } from "../../../store/actions";
 import { useSelector, useDispatch } from "react-redux";
 
 // Formik validation
@@ -25,7 +26,7 @@ import { French } from "flatpickr/dist/l10n/fr.js"
 
 const VehicleForm = () => {
   const dispatch = useDispatch();
-  const { carMakes, carModels } = useSelector((state) => state.Inspection);
+  const { currentData, carMakes, carModels, isLoading } = useSelector((state) => state.Inspection);
 
   // Form validation
   const validation = useFormik({
@@ -35,7 +36,6 @@ const VehicleForm = () => {
     initialValues: {
       make: '',
       model: '',
-      generation: '',
       version: '',
       year: '',
       colour: '',
@@ -55,7 +55,6 @@ const VehicleForm = () => {
     validationSchema: Yup.object({
       make: Yup.string().required("Veuillez sélectionner la marque"),
       model: Yup.string().required("Veuillez sélectionner le modèle"),
-      generation: Yup.string().required("Veuillez entrer la génération"),
       version: Yup.string().required("Veuillez entrer la version"),
       year: Yup.string().required("Veuillez entrer l'année"),
       colour: Yup.string().required("Veuillez entrer la couleur"),
@@ -73,9 +72,21 @@ const VehicleForm = () => {
       date: Yup.string().required("Veuillez entrer la date"),
     }),
     onSubmit: (values) => {
-      console.log("values", values);
+      dispatch(submitVehicleDetails({ ...values, id: currentData.id }));
     },
   });
+
+  useEffect(() => {
+    const { vehicleDetails, id } = currentData;
+    if (vehicleDetails && id) {
+      if (vehicleDetails.make) {
+        dispatch(getCarModels(vehicleDetails.make));
+      }
+      for (var vKey in vehicleDetails) {
+        validation.setFieldValue(vKey, vehicleDetails[vKey]);
+      }
+    }
+  }, [dispatch, currentData]);
 
   const renderCarMakeOptions = React.useMemo(() => {
     return carMakes.map((make) => { return {value: make._id, label: make.name} });
@@ -500,8 +511,21 @@ const VehicleForm = () => {
             color="success"
             className="btn-label right ms-auto nexttab nexttab"
           >
-            <i className="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>
-            ÉTAPE SUIVANTE
+          {
+            isLoading ? (
+              <span className="d-flex align-items-center">
+                <Spinner size="sm" className="flex-shrink-0"> Chargement en cours.. </Spinner>
+                <span className="flex-grow-1 ms-2">
+                  Chargement en cours..
+                </span>
+              </span>
+            ) : (
+              <>
+                <i className="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>
+                  ÉTAPE SUIVANTE
+              </>
+            )
+          }
           </Button>
         </div>
       </Form>

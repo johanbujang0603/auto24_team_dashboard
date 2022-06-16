@@ -34,6 +34,8 @@ export const postJwtLogin = data => api.create(url.POST_FAKE_JWT_LOGIN, data);
 
 // Inspection Method
 export const uploadVehiclePhotos = data => api.create(url.POST_UPLOAD_VEHICLE_PHOTOS, data);
+export const postVehicleDetails = data => api.create(url.POST_VEHICLE_DETAILS, data);
+export const postVehicleInspection = data => api.create(url.POST_VEHICLE_INSPECTION, data);
 
 // Car Makes & Models Method
 export const getCarMakesList = () => api.get(url.GET_CAR_MAKES);

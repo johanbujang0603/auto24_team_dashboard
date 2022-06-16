@@ -9,6 +9,8 @@ import {
 } from "../../../store/actions";
 import { useSelector, useDispatch } from "react-redux";
 
+import { photoTypes } from "../../../common/data";
+
 import emptyPhoto1 from "../../../assets/images/empty/photo1.jpg";
 import emptyPhoto2 from "../../../assets/images/empty/photo2.jpg";
 import emptyPhoto3 from "../../../assets/images/empty/photo3.jpg";
@@ -39,25 +41,9 @@ const emptyImages = {
   interior_rear: emptyPhoto11,
 };
 
-const types = [
-  { name: "Devant de la voiture", value: "front" },
-  { name: "Avant gauche de la voiture", value: "front_left" },
-  { name: "Côté gauche de la voiture", value: "left_side" },
-  { name: "Arrière gauche de la voiture", value: "rear_left" },
-  { name: "Arrière de la voiture (coffre fermé)", value: "rear_boot_closed" },
-  { name: "Arrière de la voiture (coffre ouvert)", value: "rear_boot_open" },
-  { name: "Arrière droit de la voiture", value: "rear_right" },
-  { name: "Côté droit de la voiture", value: "right_side" },
-  { name: "Avant droit de la voiture", value: "front_right" },
-  { name: "Moteur", value: "interior_front_cover" },
-  { name: "Coffre", value: "trunk" },
-  { name: "Tableau de bord", value: "interior_front" },
-  { name: "Places arrières", value: "interior_rear" },
-];
-
 const VehiclePictures = () => {
   const dispatch = useDispatch();
-  const {id, currentData, isLoading} = useSelector((state) => state.Inspection);
+  const {currentData, isLoading} = useSelector((state) => state.Inspection);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentType, setCurrentType] = useState(null);
   const [photos, setPhotos] = useState(null);
@@ -67,10 +53,10 @@ const VehiclePictures = () => {
   useEffect(() => {
     const initializePhotos = async () => {
       let initialPhotos = {};
-      for (let i = 0 ; i < types.length ; i ++) {
-        initialPhotos[types[i].value] = null;
+      for (let i = 0 ; i < photoTypes.length ; i ++) {
+        initialPhotos[photoTypes[i].value] = null;
       }  
-      if (photos !== null && id !== null) {
+      if (currentData.photos !== null && currentData.id !== null) {
         for (let photoKey in photos) {
           if (!photos[photoKey]) continue;
           const blob = await fetch(`/uploads/${photos[photoKey]}`).then((r) => r.blob());
@@ -84,13 +70,13 @@ const VehiclePictures = () => {
     }
 
     initializePhotos();
-  }, [dispatch, currentData, id]);
+  }, [dispatch]);
 
   useEffect(() => {
-  }, [photos])
+  }, [photos, currentData])
 
   const handleAcceptedFiles = (files) => {
-    const newKey = types[currentIndex].value;
+    const newKey = photoTypes[currentIndex].value;
     const fileWithPreview = Object.assign(files[0], {
       preview: URL.createObjectURL(files[0])
     });
@@ -118,6 +104,7 @@ const VehiclePictures = () => {
     const newFile = Object.assign(file, {
       preview: URL.createObjectURL(file),
     });
+    console.log(newFile);
     setPhotos({ ...photos, [currentType]: newFile });
     setCurrentType(null);
   }
@@ -167,7 +154,7 @@ const VehiclePictures = () => {
                     </div>
                     <p>Veuillez ajouter une photo pour :</p>
                     <span className="mb-1 font-large-1 text-dark text-bold-600">
-                      {types[currentIndex].name}
+                      {photoTypes[currentIndex].name}
                     </span>
                   </div>
                   <div
@@ -246,7 +233,7 @@ const VehiclePictures = () => {
                         </div>
                       </div>
                       <div className="dz-thumb-text">
-                        {types[index].name}
+                        {photoTypes[index].name}
                       </div>
                     </div>
                   )
