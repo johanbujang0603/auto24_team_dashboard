@@ -14,6 +14,10 @@ import {
   GET_CAR_MODELS_FAIL,
 
   TOOGLE_ACTIVE_STEP,
+
+  SUBMIT_VEHICLE_INSPECTION,
+  SUBMIT_VEHICLE_INSPECTION_SUCCESS,
+  SUBMIT_VEHICLE_INSPECTION_FAIL,
 } from "./actionType";
 
 // common success
@@ -75,4 +79,19 @@ export const getCarModelsFail = error => ({
 export const toogleActiveStep = (step) => ({
   type: TOOGLE_ACTIVE_STEP,
   payload: step,
+});
+
+export const submitVehicleInspection = (data) => ({
+  type: SUBMIT_VEHICLE_INSPECTION,
+  payload: data,
+});
+
+export const submitVehicleInspectionSuccess = (data) => ({
+  type: SUBMIT_VEHICLE_INSPECTION_SUCCESS,
+  payload: data,
+});
+
+export const submitVehicleInspectionFail = error => ({
+  type: SUBMIT_VEHICLE_INSPECTION_FAIL,
+  payload: error,
 });

@@ -7,6 +7,9 @@ import {
     GET_CAR_MODELS_SUCCESS,
     GET_CAR_MODELS_FAIL,
     TOOGLE_ACTIVE_STEP,
+    SUBMIT_VEHICLE_INSPECTION,
+    SUBMIT_VEHICLE_INSPECTION_SUCCESS,
+    SUBMIT_VEHICLE_INSPECTION_FAIL,
 } from "./actionType";
 
 const INIT_STATE = {
@@ -26,7 +29,7 @@ const INIT_STATE = {
     },
 };
 
-const Crypto = (state = INIT_STATE, action) => {
+const Inspection = (state = INIT_STATE, action) => {
     switch (action.type) {
         case SUBMIT_VEHICLE_PHOTOS:
             return { ...state, isLoading: true }
@@ -43,11 +46,16 @@ const Crypto = (state = INIT_STATE, action) => {
         case GET_CAR_MODELS_FAIL:
             return { ...state, carModels: [] }
         case TOOGLE_ACTIVE_STEP:
-            console.log(action.payload);
             return { ...state, activeStep: action.payload }
+        case SUBMIT_VEHICLE_INSPECTION:
+            return { ...state, isLoading: true }
+        case SUBMIT_VEHICLE_INSPECTION_SUCCESS:
+            return { ...state, isLoading: false }
+        case SUBMIT_VEHICLE_INSPECTION_FAIL:
+            return { ...state, isLoading: false }
         default:
             return { ...state };
     }
 };
 
-export default Crypto;
+export default Inspection;

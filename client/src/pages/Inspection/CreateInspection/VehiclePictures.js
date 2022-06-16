@@ -139,7 +139,7 @@ const VehiclePictures = () => {
 
   return (
     <React.Fragment>
-      <div>
+      <div className='mb-3'>
         <h5>PHOTOS DU VÉHICULE:</h5>
       </div>
 

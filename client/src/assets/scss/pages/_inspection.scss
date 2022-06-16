@@ -1,0 +1,27 @@
+.select-widget {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    label {
+        font-weight: 500;
+        margin-bottom: 0;
+    }
+    .check-icon {
+        padding: 0.1rem;
+        background-color: $gray-500;
+        margin: 0 1px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        &.active {
+            &.false-check {
+                background-color: $danger;
+            }
+            &.true-check {
+                background-color: $success;
+            }
+        }
+        svg {
+            color: $white;
+        }
+    }
+}

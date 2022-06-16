@@ -444,7 +444,7 @@ $value in $theme-colors {
                 font-weight: $font-weight-medium;
                 float: left;
             }
-            &.active, &.done{
+            &.done{
                 .step-icon{
                     color: $success;
                     &:before{

@@ -79,7 +79,7 @@ const VehicleForm = () => {
 
   const renderCarMakeOptions = React.useMemo(() => {
     return carMakes.map((make) => { return {value: make._id, label: make.name} });
-  }, [carMakes.length]);
+  }, [carMakes]);
 
   const getSelectedMakeOption = (val) => {
     const searchIndex = carMakes.findIndex((make) => make._id === val);
@@ -89,7 +89,7 @@ const VehicleForm = () => {
 
   const renderCarModelOptions = React.useMemo(() => {
     return carModels.map((model) => { return {value: model._id, label: model.name} });
-  }, [carModels.length]);
+  }, [carModels]);
 
   const getSelectedModelOption = (val) => {
     const searchIndex = carModels.findIndex((model) => model._id === val);
@@ -99,6 +99,9 @@ const VehicleForm = () => {
 
   return (
     <React.Fragment>
+      <div className='mb-3'>
+        <h5>INFORMATIONS VÉHICULE ET PROPRIÉTAIRE:</h5>
+      </div>
       <Form
         className="needs-validation"
         onSubmit={(e) => {

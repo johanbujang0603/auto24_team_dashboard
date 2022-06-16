@@ -4,6 +4,7 @@ import {
   SUBMIT_VEHICLE_PHOTOS,
   GET_CAR_MAKES,
   GET_CAR_MODELS,
+  SUBMIT_VEHICLE_INSPECTION,
 } from "./actionType";
 
 import {
@@ -15,6 +16,8 @@ import {
   getCarMakesFail,
   getCarModelsSuccess,
   getCarModelsFail,
+  submitVehicleInspectionSuccess,
+  submitVehicleInspectionFail,
 } from "./action";
 
 //Include Both Helper File with needed methods
@@ -51,6 +54,16 @@ function* getCarModels({ payload: makeId }) {
   }
 }
 
+function* submitVehicleInspection({ payload: data }) {
+  try {
+    console.log(data);
+    // const response = yield call(getCarModelsList, makeId);
+    // yield put(getCarModelsSuccess(response));
+  } catch (error) {
+    // yield put(getCarModelsFail(error));
+  }
+}
+
 export function* watchSubmitVehiclePhotos() {
   yield takeEvery(SUBMIT_VEHICLE_PHOTOS, submitVehiclePhotos);
 }
@@ -63,11 +76,16 @@ export function* watchGetCarModels() {
   yield takeEvery(GET_CAR_MODELS, getCarModels);
 }
 
+export function* watchSubmitVehicleInspection() {
+  yield takeEvery(SUBMIT_VEHICLE_INSPECTION, submitVehicleInspection);
+}
+
 function* inspectionSaga() {
   yield all([
     fork(watchSubmitVehiclePhotos),
     fork(watchGetCarMakes),
     fork(watchGetCarModels),
+    fork(watchSubmitVehicleInspection),
   ]);
 }
 

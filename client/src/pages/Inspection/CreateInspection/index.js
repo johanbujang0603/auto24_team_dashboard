@@ -24,8 +24,14 @@ import classnames from "classnames";
 import BreadCrumb from "../../../Components/Common/BreadCrumb";
 import { loadAnimation } from "lottie-web";
 import { defineLordIconElement } from "lord-icon-element";
+
+
 import VehiclePictures from "./VehiclePictures";
 import VehicleForm from './VehicleForm';
+import VehicleInspection from './VehicleInspection';
+import WorkNeed from './WorkNeed';
+import SchemaInspection from './SchemaInspection';
+import Comments from './Comments';
 
 // register lottie and define custom element
 defineLordIconElement(loadAnimation);
@@ -183,9 +189,19 @@ const CreateInspection = () => {
                             </TabPane>
 
                             <TabPane tabId={3}>
+                              <VehicleInspection />
                             </TabPane>
 
                             <TabPane tabId={4}>
+                              <WorkNeed />
+                            </TabPane>
+
+                            <TabPane tabId={5}>
+                              <SchemaInspection />
+                            </TabPane>
+
+                            <TabPane tabId={6}>
+                              <Comments />
                             </TabPane>
                           </TabContent>
                         </div>
