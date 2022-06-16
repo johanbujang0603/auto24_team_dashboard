@@ -2,7 +2,7 @@ import axios from "axios";
 import config from "../config";
 
 // default
-axios.defaults.baseURL = config.API_URL;
+// axios.defaults.baseURL = config.API_URL;
 // content type
 axios.defaults.headers.post["Content-Type"] = "application/json";
 // intercepting to capture errors

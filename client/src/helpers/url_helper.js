@@ -1,8 +1,8 @@
 //REGISTER
-export const POST_REGISTER = "/authenticate/register";
+export const POST_REGISTER = "/api/authenticate/register";
 
 //LOGIN
-export const POST_LOGIN = "/authenticate/login";
+export const POST_LOGIN = "/api/authenticate/login";
 export const POST_FAKE_JWT_LOGIN = "/post-jwt-login";
 export const POST_FAKE_PASSWORD_FORGET = "/fake-forget-pwd";
 
@@ -11,13 +11,13 @@ export const POST_EDIT_JWT_PROFILE = "/post-jwt-profile";
 export const POST_EDIT_PROFILE = "/post-fake-profile";
 
 //Inspection
-export const POST_UPLOAD_VEHICLE_PHOTOS = "/inspection/upload-photos";
-export const POST_VEHICLE_DETAILS = "/inspection/add-details";
-export const POST_VEHICLE_INSPECTION = "/inspection/add-vehicle-inspection";
+export const POST_UPLOAD_VEHICLE_PHOTOS = "/api/inspection/upload-photos";
+export const POST_VEHICLE_DETAILS = "/api/inspection/add-details";
+export const POST_VEHICLE_INSPECTION = "/api/inspection/add-vehicle-inspection";
 
 //Car Makes & Models
-export const GET_CAR_MAKES = "/vehicle/car-makes";
-export const GET_CAR_MODELS = "/vehicle/car-models";
+export const GET_CAR_MAKES = "/api/vehicle/car-makes";
+export const GET_CAR_MODELS = "/api/vehicle/car-models";
 
 //CALENDER
 export const GET_EVENTS = "/events";
