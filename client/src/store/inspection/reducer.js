@@ -6,12 +6,13 @@ import {
     GET_CAR_MAKES_FAIL,
     GET_CAR_MODELS_SUCCESS,
     GET_CAR_MODELS_FAIL,
+    TOOGLE_ACTIVE_STEP,
 } from "./actionType";
 
 const INIT_STATE = {
     activeStep: 1,
     isLoading: false,
-    stepsDone: [],
+    passedSteps: [],
     carMakes: [],
     carModels: [],
     currentData: {
@@ -41,6 +42,9 @@ const Crypto = (state = INIT_STATE, action) => {
             return { ...state, carModels: action.payload.data }
         case GET_CAR_MODELS_FAIL:
             return { ...state, carModels: [] }
+        case TOOGLE_ACTIVE_STEP:
+            console.log(action.payload);
+            return { ...state, activeStep: action.payload }
         default:
             return { ...state };
     }

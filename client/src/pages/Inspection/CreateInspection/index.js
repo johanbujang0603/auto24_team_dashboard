@@ -17,7 +17,7 @@ import {
 } from "reactstrap";
 
 //redux
-import { getCarMakes } from "../../../store/actions";
+import { getCarMakes, toogleActiveStep } from "../../../store/actions";
 import { useSelector, useDispatch } from "react-redux";
 
 import classnames from "classnames";
@@ -35,18 +35,10 @@ const CreateInspection = () => {
 
   const dispatch = useDispatch();
 
-  const [activeVerticalTab, setactiveVerticalTab] = useState(1);
-  const [passedverticalSteps, setPassedverticalSteps] = useState([1]);
+  const { activeStep, passedSteps } = useSelector((state) => state.Inspection);
 
   function toggleVerticalTab(tab) {
-    if (activeVerticalTab !== tab) {
-      var modifiedSteps = [...passedverticalSteps, tab];
-
-      if (tab >= 7 && tab <= 11) {
-        setactiveVerticalTab(tab);
-        setPassedverticalSteps(modifiedSteps);
-      }
-    }
+    dispatch(toogleActiveStep(tab))
   }
 
   useEffect(() => {
@@ -76,8 +68,8 @@ const CreateInspection = () => {
                             href="#"
                               className={
                                 (classnames({
-                                  active: activeVerticalTab === 1,
-                                  done: (activeVerticalTab <= 11 && activeVerticalTab > 7)
+                                  active: activeStep === 1,
+                                  done: passedSteps.includes(1)
                                 }))
                               }
                               onClick={() => {
@@ -95,8 +87,8 @@ const CreateInspection = () => {
                             href="#"
                               className={
                                 (classnames({
-                                  active: activeVerticalTab === 2,
-                                  done: (activeVerticalTab <= 11 && activeVerticalTab >= 2)
+                                  active: activeStep === 2,
+                                  done: passedSteps.includes(2)
                                 }))
                               }
                               onClick={() => {
@@ -113,8 +105,8 @@ const CreateInspection = () => {
                             <NavLink
                             href="#"
                               className={classnames({
-                                active: activeVerticalTab === 3,
-                                done: (activeVerticalTab <= 11 && activeVerticalTab >= 3)
+                                active: activeStep === 3,
+                                done: passedSteps.includes(3)
                               })}
                               onClick={() => {
                                 toggleVerticalTab(3);
@@ -130,8 +122,8 @@ const CreateInspection = () => {
                             <NavLink
                             href="#"
                               className={classnames({
-                                active: activeVerticalTab === 4,
-                                done: (activeVerticalTab <= 11 && activeVerticalTab >= 4)
+                                active: activeStep === 4,
+                                done: passedSteps.includes(4)
                               })}
                               onClick={() => {
                                 toggleVerticalTab(4);
@@ -147,8 +139,8 @@ const CreateInspection = () => {
                             <NavLink
                             href="#"
                               className={classnames({
-                                active: activeVerticalTab === 5,
-                                done: (activeVerticalTab <= 11 && activeVerticalTab >= 5)
+                                active: activeStep === 5,
+                                done: passedSteps.includes(5)
                               })}
                               onClick={() => {
                                 toggleVerticalTab(5);
@@ -164,8 +156,8 @@ const CreateInspection = () => {
                             <NavLink
                             href="#"
                               className={classnames({
-                                active: activeVerticalTab === 6,
-                                done: (activeVerticalTab <= 11 && activeVerticalTab >= 6)
+                                active: activeStep === 6,
+                                done: passedSteps.includes(6)
                               })}
                               onClick={() => {
                                 toggleVerticalTab(6);
@@ -181,7 +173,7 @@ const CreateInspection = () => {
                       </Col>
                       <Col lg={10}>
                         <div className="px-lg-4">
-                          <TabContent activeTab={activeVerticalTab}>
+                          <TabContent activeTab={activeStep}>
                             <TabPane tabId={1}>
                               <VehiclePictures />
                             </TabPane>

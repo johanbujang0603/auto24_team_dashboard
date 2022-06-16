@@ -12,6 +12,8 @@ import {
   GET_CAR_MODELS,
   GET_CAR_MODELS_SUCCESS,
   GET_CAR_MODELS_FAIL,
+
+  TOOGLE_ACTIVE_STEP,
 } from "./actionType";
 
 // common success
@@ -68,4 +70,9 @@ export const getCarModelsSuccess = (data) => ({
 export const getCarModelsFail = error => ({
   type: GET_CAR_MODELS_FAIL,
   payload: error,
+});
+
+export const toogleActiveStep = (step) => ({
+  type: TOOGLE_ACTIVE_STEP,
+  payload: step,
 });

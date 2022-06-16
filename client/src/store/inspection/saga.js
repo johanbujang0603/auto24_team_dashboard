@@ -63,7 +63,7 @@ export function* watchGetCarModels() {
   yield takeEvery(GET_CAR_MODELS, getCarModels);
 }
 
-function* ecommerceSaga() {
+function* inspectionSaga() {
   yield all([
     fork(watchSubmitVehiclePhotos),
     fork(watchGetCarMakes),
@@ -71,4 +71,4 @@ function* ecommerceSaga() {
   ]);
 }
 
-export default ecommerceSaga;
+export default inspectionSaga;
