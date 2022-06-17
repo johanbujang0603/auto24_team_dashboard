@@ -11,6 +11,7 @@ export const POST_EDIT_JWT_PROFILE = "/post-jwt-profile";
 export const POST_EDIT_PROFILE = "/post-fake-profile";
 
 //Inspection
+export const GET_INSPECTION_LIST = "/api/inspection/list";
 export const POST_UPLOAD_VEHICLE_PHOTOS = "/api/inspection/upload-photos";
 export const POST_VEHICLE_DETAILS = "/api/inspection/add-details";
 export const POST_VEHICLE_INSPECTION = "/api/inspection/add-vehicle-inspection";

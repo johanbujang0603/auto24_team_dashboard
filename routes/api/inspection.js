@@ -28,6 +28,11 @@ const colorTrans = {
     "Gray": "Grise"
 }
 
+router.get("/list", async (req, res) => {
+    const dataList = await Inspection.find({}).sort({ date: -1 }).populate("vehicle_details.make").populate("vehicle_details.model").exec();
+    return res.json({ data: dataList });
+});
+
 router.post("/upload-photos", async (req, res) => {
     let photos = new Object;
 

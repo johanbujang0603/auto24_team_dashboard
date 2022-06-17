@@ -33,6 +33,7 @@ export const postFakeProfile = data => api.create(url.POST_EDIT_PROFILE, data);
 export const postJwtLogin = data => api.create(url.POST_FAKE_JWT_LOGIN, data);
 
 // Inspection Method
+export const getInspectionList = () => api.get(url.GET_INSPECTION_LIST)
 export const uploadVehiclePhotos = data => api.create(url.POST_UPLOAD_VEHICLE_PHOTOS, data);
 export const postVehicleDetails = data => api.create(url.POST_VEHICLE_DETAILS, data);
 export const postVehicleInspection = data => api.create(url.POST_VEHICLE_INSPECTION, data);

@@ -9,6 +9,7 @@ import {
   SUBMIT_COMMENTS,
   GET_CAR_MAKES,
   GET_CAR_MODELS,
+  GET_INSPECTIONS,
 } from "./actionType";
 
 import {
@@ -30,6 +31,8 @@ import {
   getCarMakesFail,
   getCarModelsSuccess,
   getCarModelsFail,
+  getInspectionsSuccess,
+  getInspectionsFail,
 } from "./action";
 
 //Include Both Helper File with needed methods
@@ -42,6 +45,7 @@ import {
   postComments,
   getCarMakesList,
   getCarModelsList,
+  getInspectionList,
 } from "../../helpers/backend_helper";
 
 function* submitVehiclePhotos({ payload: vehiclePhotos }) {
@@ -117,6 +121,16 @@ function* getCarModels({ payload: makeId }) {
   }
 }
 
+function* getInspections() {
+  try {
+    const response = yield call(getInspectionList);
+    yield put(getInspectionsSuccess(response));
+  } catch (error) {
+    yield put(getInspectionsFail(error));
+  }
+}
+
+
 export function* watchSubmitVehiclePhotos() {
   yield takeEvery(SUBMIT_VEHICLE_PHOTOS, submitVehiclePhotos);
 }
@@ -149,6 +163,10 @@ export function* watchGetCarModels() {
   yield takeEvery(GET_CAR_MODELS, getCarModels);
 }
 
+export function* watchGetInspections() {
+  yield takeEvery(GET_INSPECTIONS, getInspections);
+}
+
 function* inspectionSaga() {
   yield all([
     fork(watchSubmitVehiclePhotos),
@@ -159,6 +177,7 @@ function* inspectionSaga() {
     fork(watchSubmitComments),
     fork(watchGetCarMakes),
     fork(watchGetCarModels),
+    fork(watchGetInspections),
   ]);
 }
 

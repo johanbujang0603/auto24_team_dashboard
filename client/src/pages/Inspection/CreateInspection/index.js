@@ -52,7 +52,7 @@ const CreateInspection = () => {
     <React.Fragment>
       <div className="page-content">    
         <Container fluid>
-          <BreadCrumb title="Create" pageTitle="Inspection" />
+          <BreadCrumb title="Ajouter " pageTitle="Inspection" />
           <Row>
             <Col xl={12}>
               <Card>

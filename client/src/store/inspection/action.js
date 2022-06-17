@@ -26,6 +26,9 @@ import {
   GET_CAR_MODELS_SUCCESS,
   GET_CAR_MODELS_FAIL,
   TOOGLE_ACTIVE_STEP,
+  GET_INSPECTIONS,
+  GET_INSPECTIONS_SUCCESS,
+  GET_INSPECTIONS_FAIL,
 } from "./actionType";
 
 // common success
@@ -70,12 +73,12 @@ export const submitVehicleDetailsFail = error => ({
   payload: error,
 });
 
-export const submitVehicleInspection = (data) => ({
+export const submitVehicleInspection = data => ({
   type: SUBMIT_VEHICLE_INSPECTION,
   payload: data,
 });
 
-export const submitVehicleInspectionSuccess = (data) => ({
+export const submitVehicleInspectionSuccess = data => ({
   type: SUBMIT_VEHICLE_INSPECTION_SUCCESS,
   payload: data,
 });
@@ -85,12 +88,12 @@ export const submitVehicleInspectionFail = error => ({
   payload: error,
 });
 
-export const submitWorkNeed = (data) => ({
+export const submitWorkNeed = data => ({
   type: SUBMIT_WORK_NEED,
   payload: data,
 });
 
-export const submitWorkNeedSuccess = (data) => ({
+export const submitWorkNeedSuccess = data => ({
   type: SUBMIT_WORK_NEED_SUCCESS,
   payload: data,
 });
@@ -100,12 +103,12 @@ export const submitWorkNeedFail = error => ({
   payload: error,
 });
 
-export const submitSchemaInspection = (data) => ({
+export const submitSchemaInspection = data => ({
   type: SUBMIT_SCHEMA_INSPECTION,
   payload: data,
 });
 
-export const submitSchemaInspectionSuccess = (data) => ({
+export const submitSchemaInspectionSuccess = data => ({
   type: SUBMIT_SCHEMA_INSPECTION_SUCCESS,
   payload: data,
 });
@@ -115,12 +118,12 @@ export const submitSchemaInspectionFail = error => ({
   payload: error,
 });
 
-export const submitComments = (data) => ({
+export const submitComments = data => ({
   type: SUBMIT_COMMENTS,
   payload: data,
 });
 
-export const submitCommentsSuccess = (data) => ({
+export const submitCommentsSuccess = data => ({
   type: SUBMIT_COMMENTS_SUCCESS,
   payload: data,
 });
@@ -134,7 +137,7 @@ export const getCarMakes = () => ({
   type: GET_CAR_MAKES,
 });
 
-export const getCarMakesSuccess = (data) => ({
+export const getCarMakesSuccess = data => ({
   type: GET_CAR_MAKES_SUCCESS,
   payload: data,
 });
@@ -149,7 +152,7 @@ export const getCarModels = makeId => ({
   payload: makeId,
 });
 
-export const getCarModelsSuccess = (data) => ({
+export const getCarModelsSuccess = data => ({
   type: GET_CAR_MODELS_SUCCESS,
   payload: data,
 });
@@ -159,7 +162,21 @@ export const getCarModelsFail = error => ({
   payload: error,
 });
 
-export const toogleActiveStep = (step) => ({
+export const toogleActiveStep = step => ({
   type: TOOGLE_ACTIVE_STEP,
   payload: step,
+});
+
+export const getInspections = () => ({
+  type: GET_INSPECTIONS,
+});
+
+export const getInspectionsSuccess = data => ({
+  type: GET_INSPECTIONS_SUCCESS,
+  payload: data,
+});
+
+export const getInspectionsFail = error => ({
+  type: GET_INSPECTIONS_FAIL,
+  payload: error,
 });

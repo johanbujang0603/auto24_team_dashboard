@@ -22,9 +22,13 @@ import {
     GET_CAR_MODELS_SUCCESS,
     GET_CAR_MODELS_FAIL,
     TOOGLE_ACTIVE_STEP,
+    GET_INSPECTIONS,
+    GET_INSPECTIONS_FAIL,
+    GET_INSPECTIONS_SUCCESS,
 } from "./actionType";
 
 const INIT_STATE = {
+    inspectionList: [],
     activeStep: 1,
     isLoading: false,
     error: null,
@@ -156,6 +160,11 @@ const Inspection = (state = INIT_STATE, action) => {
             return { ...state, error: action.payload, carModels: [] }
         case TOOGLE_ACTIVE_STEP:
             return { ...state, activeStep: action.payload }
+        case GET_INSPECTIONS_SUCCESS:
+            console.log(action.payload.data);
+            return { ...state, inspectionList: action.payload.data, error: null }
+        case GET_INSPECTIONS_FAIL:
+            return { ...state, error: action.payload, inspectionList: [] }
         default:
             return { ...state };
     }
