@@ -15,7 +15,7 @@ const InspectionSchema = new Schema({
   work_needed: {
     type: Object
   },
-  vehicle_inspection_diagram: {
+  schema_inspection: {
     type: Array,
   },
   canvas_url: {

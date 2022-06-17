@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col, Button, Spinner } from 'reactstrap';
 
 //redux
-import {
-  submitVehicleInspection,
-} from "../../../store/actions";
+import { submitVehicleInspection, toogleActiveStep } from "../../../store/actions";
 import { useSelector, useDispatch } from "react-redux";
 
 import SelectWidget from "./SelectWidget";
@@ -12,7 +10,7 @@ import { inspectionInfos } from "../../../common/data";
 
 const VehicleInspection = () => {
   const dispatch = useDispatch();
-  const {currentData, isLoading} = useSelector((state) => state.Inspection);
+  const {activeStep, currentData, isLoading} = useSelector((state) => state.Inspection);
 
   const [inspectionData, setInspectionData] = useState({});
 
@@ -78,7 +76,7 @@ const VehicleInspection = () => {
         <Button
           type="button"
           className="btn btn-light btn-label previestab"
-          onClick={() => console.log("xxx")}
+          onClick={() => dispatch(toogleActiveStep(activeStep - 1))}
         >
           <i className="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i>{" "}
           ÉTAPE PRÉCÉDENTE

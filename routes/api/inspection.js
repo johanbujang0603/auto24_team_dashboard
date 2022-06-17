@@ -47,6 +47,7 @@ router.post("/upload-photos", async (req, res) => {
             console.log(err);
             return res.status(400).json({ message: "There was an error parsing the files" });
         }
+        const { id } = fields;
         for (var fileKey in files) {
             photos[fileKey] = files[fileKey].newFilename;
         }
@@ -109,15 +110,36 @@ router.post("/upload-photos", async (req, res) => {
                     newVehicleDetails['make'] = '';
                     newVehicleDetails['model'] = '';
                 }
+                if (id === 'null') {
+                    const newInspection = new Inspection({
+                        photos,
+                        vehicle_details: newVehicleDetails,
+                        vehicle_inspection: null,
+                        schema_inspection: [],
+                        canvas_url: null,
+                        comments: null,
+                        work_needed: null,
+                        date: new Date(),
+                    });
 
-                const newInspection = new Inspection({
-                    photos,
-                    vehicle_details: newVehicleDetails
-                });
-
-                newInspection.save();
-                return res.json({ data: newInspection._doc });
+                    newInspection.save();
+                    return res.json({ data: newInspection._doc });
+                } else {
+                    Inspection.findByIdAndUpdate(id, {
+                        $set: {
+                            photos,
+                            vehicle_details: newVehicleDetails,
+                        }
+                    }, { new: true }, function (err, doc) {
+                        if (err) {
+                            return res.status(400).json({ message: "There was an error updating vehicle pictures and details." })
+                        }
+                        return res.json({ data: doc });
+                    });
+                }
             });
+        } else {
+            return res.status(400).json({ message: "There is not picture for car front." });
         }
     });
 });
@@ -131,7 +153,7 @@ router.post("/add-details", async (req, res) => {
             $set: {
                 vehicle_details: vehicleDetails,
             }
-        }, { returnOriginal: false }, function (err, doc) {
+        }, { new: true }, function (err, doc) {
             if (err) {
                 return res.status(400).json({ message: "There was an error updating vehicle details." })
             }
@@ -141,7 +163,7 @@ router.post("/add-details", async (req, res) => {
         const newInspection = new Inspection({
             photos: null,
             vehicle_inspection: null,
-            vehicle_inspection_diagram: [],
+            schema_inspection: [],
             canvas_url: null,
             comments: null,
             work_needed: null,
@@ -163,9 +185,9 @@ router.post("/add-vehicle-inspection", async (req, res) => {
             $set: {
                 vehicle_inspection: inspectionData,
             }
-        }, { returnOriginal: false }, function (err, doc) {
+        }, { new: true }, function (err, doc) {
             if (err) {
-                return res.status(400).json({ message: "There was an error updating vehicle details." })
+                return res.status(400).json({ message: "There was an error updating vehicle inspection." })
             }
             return res.json({ data: doc });
         })
@@ -173,12 +195,124 @@ router.post("/add-vehicle-inspection", async (req, res) => {
         const newInspection = new Inspection({
             photos: null,
             vehicle_inspection: inspectionData,
-            vehicle_inspection_diagram: [],
+            schema_inspection: [],
             canvas_url: null,
             comments: null,
             work_needed: null,
             date: new Date(),
             vehicle_details: null,
+        });
+
+        newInspection.save();
+        return res.json({ data: newInspection._doc });
+    }
+});
+
+router.post("/add-work-need", async (req, res) => {
+    const { id } = req.body;
+    const workNeed = req.body;
+    delete workNeed.id;
+    if (id) {
+        Inspection.findByIdAndUpdate(id, {
+            $set: {
+                work_needed: workNeed,
+            }
+        }, { new: true }, function (err, doc) {
+            if (err) {
+                return res.status(400).json({ message: "There was an error updating work needed details." })
+            }
+            return res.json({ data: doc });
+        });
+    } else {
+        const newInspection = new Inspection({
+            photos: null,
+            vehicle_inspection: null,
+            schema_inspection: [],
+            canvas_url: null,
+            comments: null,
+            work_needed: workNeed,
+            date: new Date(),
+            vehicle_details: null
+        });
+
+        newInspection.save();
+        return res.json({ data: newInspection._doc });
+    }
+});
+
+router.post("/add-schema-inspection", async (req, res) => {
+    const uploadFolder = path.join(__dirname, '../../uploads', 'canvas');
+
+    // Basic Setup Formidable
+    const form = new formidable.IncomingForm({
+        keepExtensions: true,
+        uploadDir: uploadFolder,
+        multiples: true,
+        maxFileSize: 50 * 1024 * 1024,
+    });
+
+    // Parsing
+    form.parse(req, async (err, fields, files) => {
+        if (err) {
+            console.log(err);
+            return res.status(400).json({ message: "There was an error parsing the files" });
+        }
+        const canvasUrl = files.canvasFile.newFilename;
+        const { id, events } = fields;
+        if (id === 'null') {
+            const newInspection = new Inspection({
+                schema_inspection: JSON.parse(events),
+                canvas_url: canvasUrl,
+                vehicle_details: null,
+                photos: null,
+                vehicle_inspection: null,
+                comments: null,
+                work_needed: null,
+                date: new Date(),
+            });
+
+            newInspection.save();
+            return res.json({ data: newInspection._doc });
+        } else {
+            Inspection.findByIdAndUpdate(id, {
+                $set: {
+                    schema_inspection: JSON.parse(events),
+                    canvas_url: canvasUrl,
+                }
+            }, { new: true }, function (err, doc) {
+                console.log(doc);
+                if (err) {
+                    return res.status(400).json({ message: "There was an error updating schema inspection." })
+                }
+                return res.json({ data: doc });
+            })
+        }
+    });
+});
+
+router.post("/add-comments", async (req, res) => {
+    const { id, comments } = req.body;
+    if (id) {
+        Inspection.findByIdAndUpdate(id, {
+            $set: {
+                comments: comments,
+            }
+        }, { new: true }, function (err, doc) {
+            if (err) {
+                return res.status(400).json({ message: "There was an error updating work needed details." })
+            }
+            return res.json({ data: doc });
+        });
+    } else {
+        const newInspection = new Inspection({
+            photos: null,
+            vehicle_inspection: null,
+            schema_inspection: [],
+            canvas_url: null,
+            work_needed: null,
+            comments: comments,
+            date: new Date(),
+            vehicle_details: null
         });
 
         newInspection.save();

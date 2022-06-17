@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col, Button, Spinner, Form, Label, Input, FormGroup, FormFeedback } from 'reactstrap';
 
 //redux
-import {
-//   submitVehicleInspection,
-} from "../../../store/actions";
+import { submitWorkNeed, toogleActiveStep } from "../../../store/actions";
 import { useSelector, useDispatch } from "react-redux";
 
 // Formik validation
@@ -13,7 +11,7 @@ import { useFormik } from "formik";
 
 const WorkNeed = () => {
   const dispatch = useDispatch();
-  const {id, currentData, isLoading} = useSelector((state) => state.Inspection);
+  const {activeStep, currentData, isLoading} = useSelector((state) => state.Inspection);
 
   // Form validation
   const validation = useFormik({
@@ -31,16 +29,12 @@ const WorkNeed = () => {
       passage: Yup.string().required("Veuillez entrer la passage"),
     }),
     onSubmit: (values) => {
-      console.log("values", values);
+      dispatch(submitWorkNeed({...values, id: currentData.id}));
     },
   });
 
   useEffect(() => {
   }, [currentData]);
-
-  const handleSubmit = () => {
-    // dispatch(inspectionData);
-  }
 
   return (
     <React.Fragment>
@@ -116,41 +110,38 @@ const WorkNeed = () => {
             <FormFeedback type="invalid">{validation.errors.passage}</FormFeedback>
           ) : null}
         </FormGroup>
-      </Form>
-
-      <div className="d-flex align-items-start gap-3 mt-4">
-        <Button
-          type="button"
-          className="btn btn-light btn-label previestab"
-          onClick={() => console.log("xxx")}
-        >
-          <i className="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i>{" "}
-          ÉTAPE PRÉCÉDENTE
-        </Button>
-        <Button
-          type="button"
-          color="success"
-          className="btn-label right ms-auto nexttab nexttab"
-          onClick={handleSubmit}
-        >
-          {
-            isLoading ? (
-              <span className="d-flex align-items-center">
-                <Spinner size="sm" className="flex-shrink-0"> Chargement en cours.. </Spinner>
-                <span className="flex-grow-1 ms-2">
-                  Chargement en cours..
+        <div className="d-flex align-items-start gap-3 mt-4">
+          <Button
+            type="button"
+            className="btn btn-light btn-label previestab"
+            onClick={() => dispatch(toogleActiveStep(activeStep - 1))}
+          >
+            <i className="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i>{" "}
+            ÉTAPE PRÉCÉDENTE
+          </Button>
+          <Button
+            type="submit"
+            color="success"
+            className="btn-label right ms-auto nexttab nexttab"
+          >
+            {
+              isLoading ? (
+                <span className="d-flex align-items-center">
+                  <Spinner size="sm" className="flex-shrink-0"> Chargement en cours.. </Spinner>
+                  <span className="flex-grow-1 ms-2">
+                    Chargement en cours..
+                  </span>
                 </span>
-              </span>
-            ) : (
-              <>
-                <i className="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>
-                  ÉTAPE SUIVANTE
-              </>
-            )
-          }
-          
-        </Button>
-      </div>
+              ) : (
+                <>
+                  <i className="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>
+                    ÉTAPE SUIVANTE
+                </>
+              )
+            }
+          </Button>
+        </div>
+      </Form>
     </React.Fragment>
   );
 };

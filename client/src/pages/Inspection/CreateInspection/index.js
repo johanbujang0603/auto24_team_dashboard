@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   Card,
   CardBody,
   CardHeader,
   Col,
   Container,
-  Form,
-  Input,
-  Label,
+  Alert,
   Nav,
   NavItem,
   NavLink,
@@ -25,7 +23,6 @@ import BreadCrumb from "../../../Components/Common/BreadCrumb";
 import { loadAnimation } from "lottie-web";
 import { defineLordIconElement } from "lord-icon-element";
 
-
 import VehiclePictures from "./VehiclePictures";
 import VehicleForm from './VehicleForm';
 import VehicleInspection from './VehicleInspection';
@@ -41,7 +38,7 @@ const CreateInspection = () => {
 
   const dispatch = useDispatch();
 
-  const { activeStep, passedSteps } = useSelector((state) => state.Inspection);
+  const { error, activeStep, passedSteps } = useSelector((state) => state.Inspection);
 
   function toggleVerticalTab(tab) {
     dispatch(toogleActiveStep(tab))
@@ -179,6 +176,9 @@ const CreateInspection = () => {
                       </Col>
                       <Col lg={10}>
                         <div className="px-lg-4">
+                          {error && error ? (
+                              <Alert color="danger"><div>{error}</div></Alert>
+                          ) : null}
                           <TabContent activeTab={activeStep}>
                             <TabPane tabId={1}>
                               <VehiclePictures />

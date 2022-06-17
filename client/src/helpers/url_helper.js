@@ -14,6 +14,9 @@ export const POST_EDIT_PROFILE = "/post-fake-profile";
 export const POST_UPLOAD_VEHICLE_PHOTOS = "/api/inspection/upload-photos";
 export const POST_VEHICLE_DETAILS = "/api/inspection/add-details";
 export const POST_VEHICLE_INSPECTION = "/api/inspection/add-vehicle-inspection";
+export const POST_WORK_NEED = "/api/inspection/add-work-need";
+export const POST_SCHEMA_INSPECTION = "/api/inspection/add-schema-inspection";
+export const POST_COMMENTS = "/api/inspection/add-comments";
 
 //Car Makes & Models
 export const GET_CAR_MAKES = "/api/vehicle/car-makes";

@@ -104,7 +104,6 @@ const VehiclePictures = () => {
     const newFile = Object.assign(file, {
       preview: URL.createObjectURL(file),
     });
-    console.log(newFile);
     setPhotos({ ...photos, [currentType]: newFile });
     setCurrentType(null);
   }
@@ -121,6 +120,7 @@ const VehiclePictures = () => {
       if (photos[photoKey] !== null)
         formData.append(photoKey, photos[photoKey]);
     }
+    formData.append("id", currentData.id);
     dispatch(submitVehiclePhotos(formData));
   }
 

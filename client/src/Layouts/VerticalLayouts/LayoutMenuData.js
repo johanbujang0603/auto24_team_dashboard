@@ -9,7 +9,7 @@ const Navdata = () => {
     const [isInspection, setIsInspection] = useState(false);
     const [isArgus, setIsArgus] = useState(false);
 
-    const [iscurrentState, setIscurrentState] = useState('Dashboard');
+    const [iscurrentState, setIscurrentState] = useState('');
 
     function updateIconSidebar(e) {
         if (e && e.target && e.target.getAttribute("subitems")) {
@@ -27,12 +27,6 @@ const Navdata = () => {
 
     useEffect(() => {
         document.body.classList.remove('twocolumn-panel');
-        if (iscurrentState === 'Users') {
-            history.push("/users");
-        }
-        if (iscurrentState === 'Dashboard') {
-            history.push("/dashboard");
-        }
         if (iscurrentState !== 'Vin') {
             setIsVin(false);
         }
@@ -44,6 +38,12 @@ const Navdata = () => {
         }
         if (iscurrentState !== 'Argus') {
             setIsArgus(false);
+        }
+        if (iscurrentState === 'Users') {
+            history.push("/users");
+        }
+        if (iscurrentState === 'Dashboard') {
+            history.push("/dashboard");
         }
     }, [
         history,

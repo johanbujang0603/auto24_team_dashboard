@@ -13,7 +13,7 @@ import {
 import Select from "react-select";
 
 //redux
-import { getCarModels, submitVehicleDetails } from "../../../store/actions";
+import { getCarModels, submitVehicleDetails, toogleActiveStep } from "../../../store/actions";
 import { useSelector, useDispatch } from "react-redux";
 
 // Formik validation
@@ -26,7 +26,7 @@ import { French } from "flatpickr/dist/l10n/fr.js"
 
 const VehicleForm = () => {
   const dispatch = useDispatch();
-  const { currentData, carMakes, carModels, isLoading } = useSelector((state) => state.Inspection);
+  const { currentData, carMakes, carModels, isLoading, activeStep } = useSelector((state) => state.Inspection);
 
   // Form validation
   const validation = useFormik({
@@ -501,7 +501,7 @@ const VehicleForm = () => {
           <Button
             type="button"
             className="btn btn-light btn-label previestab"
-            onClick={() => console.log("xxx")}
+            onClick={() => dispatch(toogleActiveStep(activeStep - 1))}
           >
             <i className="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i>{" "}
             ÉTAPE PRÉCÉDENTE
