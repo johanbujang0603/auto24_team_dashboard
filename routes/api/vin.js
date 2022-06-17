@@ -20,16 +20,15 @@ router.post("/decode-vin", async (req, res) => {
 });
 
 router.post("/upload-picture", async (req, res) => {
-    let vinPhotoPath = null;
-
-    // Basic Setup Formidable
-    const form = new formidable.IncomingForm();
     const uploadFolder = path.join(__dirname, '../../uploads', 'vin');
 
-    // Basic Configuration
-    form.multiples = true;
-    form.maxFileSize = 50*1024*1024;    // 5MB
-    form.uploadDir = uploadFolder;
+    // Basic Setup Formidable
+    const form = new formidable.IncomingForm({
+        keepExtensions: true,
+        uploadDir: uploadFolder,
+        multiples: true,
+        maxFileSize: 50 * 1024 * 1024,
+    });
 
     // Parsing
     form.parse(req, async (err, fields, files) => {
@@ -41,8 +40,6 @@ router.post("/upload-picture", async (req, res) => {
         // Check if multiple files or a single file
         if (!files.file.length) {
             const file = files.file;
-            // const fileName = encodeURIComponent(file.originalFilename.replace(/\s/g, '-'));
-            // fs.renameSync(file.filepath, path.join(uploadFolder, fileName));
 
             // Imports the Google Cloud client library
             const vision = require('@google-cloud/vision');
@@ -50,7 +47,6 @@ router.post("/upload-picture", async (req, res) => {
             // Creates a client
             const client = new vision.ImageAnnotatorClient();
             // Performs text detection on the image file
-            
             const [result] = await client.textDetection(file.filepath);
 
             let vinNumber = null;
@@ -64,6 +60,12 @@ router.post("/upload-picture", async (req, res) => {
                 }
             });
 
+            if (!vinNumber) {
+                return res.status(400).json({ message: "We can't detect the VIN number from your picture uploaded." });
+            }
+
+            console.log(vinNumber);
+
             const apiPrefix = process.env.VIN_DECODER_API_URL;
             const apikey = process.env.VIN_DECODER_API_KEY;
             const secretkey = process.env.VIN_DECODER_API_SECRET_KEY;
@@ -72,7 +74,12 @@ router.post("/upload-picture", async (req, res) => {
             const controlsum = sha1(`${vin}|${id}|${apikey}|${secretkey}`).substr(0, 10);
 
             request(`${apiPrefix}/${apikey}/${controlsum}/decode/${vin}.json`, function (err, response, body) {
-                res.json({result: body});
+                if (err) {
+                    console.log(err);
+                    return res.status(400).json({ message: "There was an error decoding vin number" });
+                }
+                const respBody = JSON.parse(body);
+                return res.json({ result: respBody });
             });
         }
     });

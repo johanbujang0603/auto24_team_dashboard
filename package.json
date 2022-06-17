@@ -27,6 +27,7 @@
     "jsonwebtoken": "^8.3.0",
     "locutus": "^2.0.16",
     "mongoose": "^5.3.11",
+    "node-cron": "^3.0.1",
     "node-fetch": "2.6.0",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",

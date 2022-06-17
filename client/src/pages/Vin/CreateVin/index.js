@@ -19,10 +19,12 @@ const CreateVin = () => {
 
   const [files, setFiles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [decodeResult, setDecodeResult] = useState([]);
 
   const submitPicture = (e) => {
     e.preventDefault();
     setIsLoading(true);
+    setDecodeResult([]);
 
     const config = {
       headers: {
@@ -31,12 +33,11 @@ const CreateVin = () => {
     };
 
     const formData = new FormData();
-    console.log(files[0]);
     formData.append("file", files[0].file);
 
-    axios.post(`/vin/upload-picture`, formData, config)
+    axios.post(`/api/vin/upload-picture`, formData, config)
       .then((res) => {
-        console.log(res.data);
+        setDecodeResult(res.result.decode);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -49,13 +50,13 @@ const CreateVin = () => {
     <React.Fragment>
       <div className="page-content">       
         <Container fluid>
-          <BreadCrumb title="Create" pageTitle="VIN" />
+          <BreadCrumb title="Ajouter" pageTitle="VIN" />
 
           <Row className="mt-2">
             <Col lg={12}>
               <Card>
                 <CardHeader>
-                  <h4 className="card-title mb-0">Car Image Upload</h4>
+                  <h4 className="card-title mb-0">Image</h4>
                 </CardHeader>
 
                 <CardBody>
@@ -69,6 +70,23 @@ const CreateVin = () => {
                     className="filepond filepond-input-multiple"
                     labelIdle='<span class="filepond--label-action">Click here</span> to send your document'
                   />
+                  {
+                    decodeResult.length > 0 && (
+                      <pre className='language-markup mt-5'>
+                        {
+                          decodeResult.map((info, index) => {
+                            return (
+                              <Row key={index}>
+                                <Col sm={6}><span>{info.label}</span></Col>
+                                <Col sm={6}><span>{info.value}</span></Col>
+                                <hr />
+                              </Row>
+                            )
+                          })
+                        }
+                      </pre>
+                    )
+                  }
                 </CardBody>
 
                 <CardFooter className="text-center">
@@ -82,10 +100,10 @@ const CreateVin = () => {
                           </span>
                         </span>
                       ) : (
-                        <>Send</>
+                        <>Decode</>
                       )
                     }
-                </Button>
+                  </Button>
                 </CardFooter>
               </Card>
             </Col>
