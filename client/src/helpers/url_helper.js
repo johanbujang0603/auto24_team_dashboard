@@ -23,6 +23,14 @@ export const POST_COMMENTS = "/api/inspection/add-comments";
 export const GET_CAR_MAKES = "/api/vehicle/car-makes";
 export const GET_CAR_MODELS = "/api/vehicle/car-models";
 
+//Users
+export const GET_USER_LIST = "/api/users/list";
+export const POST_USER = "/api/users/new";
+
+
+
+
+
 //CALENDER
 export const GET_EVENTS = "/events";
 export const GET_CATEGORIES = "/categories";

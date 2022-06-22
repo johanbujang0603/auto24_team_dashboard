@@ -20,7 +20,7 @@ import InspectionList from "../pages/Inspection/InspectionList";
 import ArgusQuoting from "../pages/Argus";
 
 //Users
-// import Users from "../pages/Users";
+import Users from "../pages/Users";
 
 //login
 import Login from "../pages/Authentication/Login";
@@ -38,7 +38,7 @@ const authProtectedRoutes = [
   { path: "/inspection-list", component: InspectionList },
   { path: "/argus-quoting", component: ArgusQuoting },
 
-  // { path: "/users", component: Users },
+  { path: "/users", component: Users },
 
   // this route should be at the end of all other routes
   // eslint-disable-next-line react/display-name

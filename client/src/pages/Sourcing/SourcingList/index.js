@@ -35,12 +35,12 @@ import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
 
 //Import actions
-import {
-  getOrders as onGetOrders,
-  addNewOrder as onAddNewOrder,
-  updateOrder as onUpdateOrder,
-  deleteOrder as onDeleteOrder,
-} from "../../../store/ecommerce/action";
+// import {
+  // getOrders as onGetOrders,
+  // addNewOrder as onAddNewOrder,
+  // updateOrder as onUpdateOrder,
+  // deleteOrder as onDeleteOrder,
+// } from "../../../store/ecommerce/action";
 
 const SourcingList = () => {
   const [orderStatus, setorderStatus] = useState(null);
@@ -142,7 +142,7 @@ const SourcingList = () => {
 
   const handleDeleteOrder = () => {
     if (order.id) {
-      dispatch(onDeleteOrder(order));
+      // dispatch(onDeleteOrder(order));
       setDeleteModal(false);
     }
   };
@@ -152,7 +152,7 @@ const SourcingList = () => {
   }, [orders]);
 
   useEffect(() => {
-    dispatch(onGetOrders());
+    // dispatch(onGetOrders());
   }, [dispatch]);
 
   useEffect(() => {
@@ -209,7 +209,7 @@ const SourcingList = () => {
           status: values.status
         };
         // update order
-        dispatch(onUpdateOrder(updateOrder));
+        // dispatch(onUpdateOrder(updateOrder));
         // setDate(dateFormat());
         validation.resetForm();
       } else {
@@ -225,7 +225,7 @@ const SourcingList = () => {
           status: values["status"]
         };
         // save new order
-        dispatch(onAddNewOrder(newOrder));
+        // dispatch(onAddNewOrder(newOrder));
         // setDate(dateFormat());
         validation.resetForm();
       }
@@ -235,7 +235,7 @@ const SourcingList = () => {
 
   useEffect(() => {
     if (orders && !orders.length) {
-      dispatch(onGetOrders());
+      // dispatch(onGetOrders());
     }
   }, [dispatch, orders]);
 

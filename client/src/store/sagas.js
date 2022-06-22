@@ -8,43 +8,8 @@ import ForgetSaga from "./auth/forgetpwd/saga";
 import ProfileSaga from "./auth/profile/saga";
 //Inspection
 import InspectionSaga from "./inspection/saga";
-
-
-
-
-
-
-
-//calendar
-import calendarSaga from "./calendar/saga";
-//chat
-import chatSaga from "./chat/saga";
-//ecommerce
-import ecommerceSaga from "./ecommerce/saga";
-
-//Project
-import projectSaga from "./projects/saga";
-
-// Task
-import taskSaga from "./tasks/saga";
-
-//Counter
-// import CounterSaga from './formAdvanced/saga';
-// Crypto
-import cryptoSaga from "./crypto/saga";
-
-//TicketsList
-import ticketsSaga from "./tickets/saga";
-
-//crm
-import crmSaga from "./crm/saga";
-
-//invoice
-import invoiceSaga from "./invoice/saga";
-
-//mailbox
-import mailboxSaga from "./mailbox/saga";
-
+//Users
+import UsersSaga from "./users/saga";
 
 export default function* rootSaga() {
   yield all([
@@ -55,15 +20,6 @@ export default function* rootSaga() {
     fork(ForgetSaga),
     fork(ProfileSaga),
     fork(InspectionSaga),
-    fork(chatSaga),
-    fork(projectSaga),
-    fork(taskSaga),
-    fork(cryptoSaga),
-    fork(ticketsSaga),
-    fork(calendarSaga),
-    fork(ecommerceSaga),
-    fork(crmSaga),
-    fork(invoiceSaga),
-    fork(mailboxSaga),
+    fork(UsersSaga),
   ]);
 }

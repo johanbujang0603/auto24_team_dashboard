@@ -45,6 +45,11 @@ export const postComments = data => api.create(url.POST_COMMENTS, data);
 export const getCarMakesList = () => api.get(url.GET_CAR_MAKES);
 export const getCarModelsList = makeId => api.get(`${url.GET_CAR_MODELS}`, { makeId });
 
+// Users
+export const getUserList = () => api.get(url.GET_USER_LIST);
+export const postUser = data => api.create(url.POST_USER, data);
+
+
 
 
 // get Events

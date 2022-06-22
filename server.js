@@ -16,6 +16,7 @@ const authRoute = require("./routes/api/authenticate");
 const vinRoute = require("./routes/api/vin");
 const inspectionRoute = require("./routes/api/inspection");
 const vehicleRoute = require("./routes/api/vehicle");
+const userRoute = require("./routes/api/user");
 
 const app = express();
 app.use(cors());
@@ -45,6 +46,7 @@ app.use("/api/authenticate", authRoute);
 app.use("/api/inspection", inspectionRoute);
 app.use("/api/vin", vinRoute);
 app.use("/api/vehicle", vehicleRoute);
+app.use("/api/users", userRoute);
 
 const port = process.env.PORT || 5000;
 
